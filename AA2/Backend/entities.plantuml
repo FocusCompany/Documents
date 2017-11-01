@@ -1,0 +1,18 @@
+@startuml
+class User {
+  string email
+  string hashed_password
+  UUID id
+  List<Device> devices
+  Statistics stats
+}
+
+class Device {
+  UUID id
+  List<Log> logs
+  Statistics stats
+  Settings settings
+}
+
+
+@enduml
