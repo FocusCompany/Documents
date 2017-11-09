@@ -1,0 +1,11 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+actor user
+user -- (Tracking)
+user -- (Settings)
+user -- (Nuissance)
+(Tracking) .> (Authentication) : include
+(Settings) .> (Authentication) : include
+(Nuissance) .> (Authentication) : include
+@enduml
