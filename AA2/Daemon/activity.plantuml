@@ -1,28 +1,29 @@
 @startuml
-|USER|
+|UTILISATEUR|
 start
-:Launch daemon;
+:Démarrage daemon;
 |DAEMON|
-:Authentication;
+:Authentification;
 |BACKEND|
-if (Check user information) then (true)
+if (Verification d'identité) then (succès)
   |DAEMON|
-  :Recording;
-  |USER|
-  :Trigger actions;
+  :Tracking;
+  |UTILISATEUR|
+  :Déclenche une action;
   |DAEMON|
   :Analyse;
   :Push;
   |BACKEND|
-  :Persistence;
+  :Analyse;
+  :Persistance;
   end
-else (false)
+else (échec)
   |BACKEND|
   end
 endif
-|USER|
-:Stop daemon;
+|UTILISATEUR|
+:Arrêt daemon;
 |DAEMON|
-:Shutdown services;
+:Arrêt services;
 stop
 @enduml
