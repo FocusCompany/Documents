@@ -1,0 +1,50 @@
+@startuml
+object User {
+  id: uuid
+  email: text
+  last_name: text
+  first_name: text
+  hashed_password: text
+  PRIMARY_KEY(id)
+}
+
+
+object Device {
+// Used to store device specific informations (settings, etc)
+  user: uuid
+  id: uuid
+  name: text
+  PRIMARY_KEY(id)
+}
+
+object Event_By_Device {
+  id: text //$userId_deviceId
+  time: timestamp
+  event: Event
+  PRIMARY_KEY(id, time)
+  WITH CLUSTERING ORDER BY (time DESC)
+}
+
+object Event {
+  type: int
+  // Optional parameters depending on the type
+  after: duration
+  name: string
+}
+
+object Activity_By_User {
+  userId: uuid
+  name: text
+  from: timestamp
+  to: timestamp
+  PRIMARY_KEY(uuid)
+}
+
+object Activity_By_Device {
+  userId: uuid
+  name: text
+  from: timestamp
+  to: timestamp
+  PRIMARY_KEY(uuid)
+}
+@enduml
