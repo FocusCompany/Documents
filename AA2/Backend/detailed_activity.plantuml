@@ -1,0 +1,43 @@
+@startuml
+start
+:Attente d'appareils;
+-> Demande de connexion;
+:Crée DeviceActor;
+
+while (A un DeviceToken ?) is (non)
+  :Charge UserActor;
+  if (A un UserToken ?) then (oui)
+    :Crée DeviceToken et l'envoie au DeviceActor;
+  else (non)
+    if (A les identifiants de connexion ?) then (oui)
+      if (Sont-ils corrects ?) then (oui)
+        :Crée UserToken;
+      else (non)
+        :Renvoie demande de connexion;
+        end
+      endif
+    else (non)
+      :Renvoie demande de connexion;
+      end
+    endif
+  endif
+endwhile (oui)
+
+
+:Prépare le socket;
+:Ecoute le device;
+while (En vie ?) is (oui)
+  if (Data disponible ?) then (oui)
+    fork
+      :Lit et persiste en BDD;
+    fork again
+      :Compile l'activité;
+    fork again
+      :Envoie les nouvelles activités au UserActor;
+    end fork
+  else (non)
+  endif
+endwhile (non)
+:Termine le DeviceActor;
+stop
+@enduml
