@@ -1,0 +1,33 @@
+@startuml
+left to right direction
+
+actor Utilisateur
+
+rectangle Frontend {
+
+Utilisateur --- (Accéder à ses activités)
+Utilisateur --- (Connexion)
+Utilisateur --- (Inscription)
+Utilisateur --- (Modifier paramètres)
+
+
+(Accéder à ses activités) <.. (Filtrer les activités) : <<extend>>
+(Accéder à ses activités) .> (Connexion) : <<include>>
+(Connexion) <.. (Mot de passe oublié) : <<extend>>
+(Connexion) .> (Inscription) : <<include>>
+(Modifier paramètres) .> (Connexion) : <<include>>
+(Modifier paramètres) <.. (Modifier préférences) : <<extend>>
+(Modifier paramètres) <.. (Gérer les ordinateurs connectés) : <<extend>>
+(Modifier paramètres) <.. (Créer des filtres) : <<extend>>
+}
+
+rectangle Daemon {
+
+Utilisateur -- (Mise en pause/démarrage du tracking)
+Utilisateur -- (Connexion au Daemon)
+Utilisateur -- (Activer/désactiver filtres)
+
+(Mise en pause/démarrage du tracking) .> (Connexion au Daemon) : <<include>>
+(Activer/désactiver filtres) .> (Connexion au Daemon) : <<include>>
+}
+@enduml
