@@ -1,11 +1,15 @@
 @startuml
 left to right direction
-skinparam packageStyle rectangle
+
 actor Utilisateur
-Utilisateur -- (Tracking)
-Utilisateur -- (Paramètres)
-Utilisateur -- (Nuisances)
-(Tracking) .> (Authentification) : include
-(Paramètres) .> (Authentification) : include
-(Nuisances) .> (Authentification) : include
+
+rectangle Daemon {
+
+Utilisateur -- (Mise en pause/démarrage du tracking)
+Utilisateur -- (Connexion au Daemon)
+Utilisateur -- (Activer/désactiver filtres)
+
+(Mise en pause/démarrage du tracking) .> (Connexion au Daemon) : <<include>>
+(Activer/désactiver filtres) .> (Connexion au Daemon) : <<include>>
+}
 @enduml
