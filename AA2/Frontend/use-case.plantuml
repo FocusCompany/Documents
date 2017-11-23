@@ -1,14 +1,23 @@
 @startuml
-top to bottom direction
-:Utilisateur: -left- (Ouvrir page inscription)
-:Utilisateur: -right- (Ouvrir page connexion)
-:Utilisateur: -down- (Mot de passe oublié)
-:Utilisateur: -up- (Se connecter)
-:Serveur: -down- (Se connecter)
-:Serveur: -right- (Envoie d'un mail de réinitialisation)
-:Serveur: -left- (Inscription via formulaire)
-(Inscription via formulaire) .> (Ouvrir page inscription) : include
-(Envoie d'un mail de réinitialisation) .> (Mot de passe oublié) : include
-(Se connecter) .> (Ouvrir page connexion) : include
-(Ouvrir page connexion) .> (Mot de passe oublié) : extend
+left to right direction
+
+actor Utilisateur
+
+rectangle Frontend {
+
+Utilisateur --- (Accéder à ses activités)
+Utilisateur --- (Connexion)
+Utilisateur --- (Inscription)
+Utilisateur --- (Modifier paramètres)
+
+
+(Accéder à ses activités) <.. (Filtrer les activités) : <<extend>>
+(Accéder à ses activités) .> (Connexion) : <<include>>
+(Connexion) <.. (Mot de passe oublié) : <<extend>>
+(Connexion) .> (Inscription) : <<include>>
+(Modifier paramètres) .> (Connexion) : <<include>>
+(Modifier paramètres) <.. (Modifier préférences) : <<extend>>
+(Modifier paramètres) <.. (Gérer les ordinateurs connectés) : <<extend>>
+(Modifier paramètres) <.. (Créer des filtres) : <<extend>>
+}
 @enduml
