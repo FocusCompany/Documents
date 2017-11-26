@@ -1,0 +1,58 @@
+@startuml
+' We define it here so it stays out of the frames
+() "HTTPS" as https_interface
+
+frame "Frontend" {
+  [Page activités] -left-> [Site web]
+  [Graphiques d'activité] --> [Page activités]
+  [Filtrer les activités] --> [Page activités]
+
+  [Creation de filtres] --> [Gestion des filtres]
+  [Gestion des filtres] -> [Site web]
+}
+
+frame "Backend" {
+
+  node "Evénements" {
+    [Endpoint événements] - SOCKET
+    [Analyse] --> [Endpoint événements]
+  }
+
+  node "Authentification" {
+    [Authentification &\nautorisations] --> [Endpoint d'authentification]
+  }
+
+  node "Activités" {
+    [Constructeur de requêtes] --> [Endpoint de filtres]
+  }
+}
+
+frame "Daemon" {
+  [Filtres intelligents]
+  [Moniteur d'activité] -- SOCKET
+}
+
+database "Cassandra" {
+  [Broker]
+
+  [Informations utilisateurs] <- [Broker]
+  [Evénements] <-- [Broker]
+  [Activités compilées] <-- [Broker]
+
+  [Informations utilisateurs]
+  [Evénements]
+  [Activités compilées]
+}
+
+[Filtres intelligents] <-- [Creation de filtres]
+
+[Broker] <-- [Constructeur de requêtes]
+[Broker] <--- [Authentification &\nautorisations]
+[Broker] <-- [Analyse]
+
+
+' HTTPS interface
+[Site web] -- https_interface
+[Endpoint d'authentification] --- https_interface
+[Endpoint de filtres] - https_interface
+@enduml
