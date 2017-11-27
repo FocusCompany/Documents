@@ -19,7 +19,7 @@ start
 :Recoit requête d'un client avec identifiants;
 
 if (Correct) then (oui)
-  :Génère JWT:
+  :Génère JWT;
   :Renvoi le JWT au client;
   stop
 else (non)
