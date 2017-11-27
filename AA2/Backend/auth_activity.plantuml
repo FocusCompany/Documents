@@ -1,0 +1,29 @@
+@startuml
+start
+
+:Client;
+
+if (JWT présent\n& valide ?) then (oui)
+  :continue l'opération;
+  stop
+else (non)
+  :envoi code d'erreur au client;
+  end
+endif
+
+
+' JWT creation
+
+start
+
+:Client;
+:Envoi identifiants;
+
+if (Correct) then (oui)
+  :Génère JWT:
+  :Renvoi le JWT au client;
+  stop
+else (non)
+  :Renvoi code d'erreur au client;
+  end
+@enduml
