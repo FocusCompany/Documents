@@ -1,7 +1,7 @@
 @startuml
 start
 
-:Client;
+:Recoit requête d'un client avec JWT;
 
 if (JWT présent\n& valide ?) then (oui)
   :continue l'opération;
@@ -16,8 +16,7 @@ endif
 
 start
 
-:Client;
-:Envoi identifiants;
+:Recoit requête d'un client avec identifiants;
 
 if (Correct) then (oui)
   :Génère JWT:
