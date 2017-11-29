@@ -1,0 +1,35 @@
+@startuml
+package Protobuf <<Frame>> {
+  object Enveloppe {
+    UUID
+    PayloadType
+    Payload
+  }
+
+  object PayloadType {
+    WindowsContextPayload
+    MouseEventPayload
+    KeyEventPayload
+  }
+
+  object WindowsContextPayload {
+    ProcessName
+    WindowsName
+  }
+
+  object MouseEventPayload {
+    X
+    Y
+    ButtonPressed
+  }
+
+  object KeyEventPayload {
+    PlaintextKeylog
+  }
+
+  Enveloppe -* PayloadType
+  Enveloppe ---* WindowsContextPayload
+  Enveloppe ---* MouseEventPayload
+  Enveloppe ---* KeyEventPayload
+}
+@enduml
