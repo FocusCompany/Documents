@@ -1,0 +1,27 @@
+@startuml
+|Client|
+
+start
+:Client (Daemon, web, ou mobile);
+-> Requête HTTPS avec identifiants vers api/account/create;
+
+|#GhostWhite|Serveur d'authentification|
+  :Vérifie validité de la requête;
+  if (contient :\n- e-mail\n- mot de passe\n- nom de l'utilisateur) then (non)
+    :Refuse;
+    end
+  else (oui)
+    |Base de données|
+    if (Compte existe déjà ?) then (oui)
+      :Refuse;
+      end
+    else (non)
+      :Crée nouvel utilisateur en BDD;
+      |Serveur d'authentification|
+      :Envoie e-mail de confrmation;
+      |Client|
+      :Confirme création\nsous condition\nd'activation par email;
+      stop
+    endif
+  endif
+@enduml
