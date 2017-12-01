@@ -1,0 +1,42 @@
+@startuml
+|Daemon|
+start
+:Démarrage du Daemon;
+:Authentification;
+
+'Putting DaemonActor swimlane here allows to manipulate the order in which they appear
+|DaemonActor|
+|Backend|
+:Vérification du JWT;
+while (JWT valide ?) is (non, tentative d'échange)
+  |Serveur d'authentification|
+  if (JWT reconnu ?) then (oui)
+    :Création & \nrenvoie d'un\nnouveau JWT;
+  else (non)
+    :Renvoie erreur;
+    end
+  endif
+endwhile (oui)
+
+  |Backend|
+  :Création d'un\nDaemonActor;
+
+
+
+|DaemonActor|
+:Initialisation du socket TCP;
+:Signale au Daemon\nque tout est prêt;
+
+|Daemon|
+while (Socket ouvert) is (oui)
+  :Ecoute des événements systèmes;
+  while (Moins de 100\nenveloppes*)
+    :Convertion des événements\nen enveloppe Protobuf;
+    :Ajout des enveloppes\ndans une queue;
+  endwhile (Queue remplie)
+:Envoie de la queue\nsur le socket;
+
+endwhile (socket fermé)
+:Ferme socket et\narrête l'écoute;
+stop
+@enduml
