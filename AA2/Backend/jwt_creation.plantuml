@@ -1,0 +1,33 @@
+@startuml
+skinparam ActivityFontSize 15
+
+|Client|
+
+start
+:Connexion via Daemon,\nweb, ou mobile;
+-> Requête HTTPS vers {domain}/account/login;
+
+|#GhostWhite|Serveur d'authentification|
+  :Récupère informations\nutilisateur dans la BDD;
+  |Base de données|
+  if (Utilisateur existe) then (non)
+    :Renvoie\nmessage d'erreur;
+    end
+  else (oui)
+
+    |Base de données|
+    :Renvoie\ninformations\nutilisateur;
+
+    |Serveur d'authentification|
+    :Hache le mot de passe;
+
+    if (Hash correspondent ?) then (oui)
+      :Créé JWT avec informations utilisateur;
+      :Signe JWT avec clé privée;
+      :Renvoie JWT;
+      stop
+    else (non)
+      :Renvoie\nmessage d'erreur;
+      end    
+  endif
+@enduml
