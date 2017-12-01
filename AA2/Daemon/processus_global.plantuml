@@ -1,4 +1,9 @@
+'Describes the global process of monitoring in the Daemon.
+'This diagram shows what goes on in which actor, from the authentication step to the persistence
+
 @startuml
+skinparam swimlaneWidth same
+
 |Daemon|
 start
 :Démarrage du Daemon;
@@ -36,6 +41,11 @@ while (Socket ouvert) is (oui)
   endwhile (Queue remplie)
 :Envoie de la queue\nsur le socket;
 
+|DaemonActor|
+:Persistence;
+:Préviens les autres\nacteurs du système;
+
+|Daemon|
 endwhile (socket fermé)
 :Ferme socket et\narrête l'écoute;
 stop
