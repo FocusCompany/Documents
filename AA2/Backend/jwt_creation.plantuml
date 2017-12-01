@@ -9,12 +9,9 @@ start
 
 |#GhostWhite|Serveur d'authentification|
   :Récupère informations\nutilisateur dans la BDD;
-  |Base de données|
-  if (Utilisateur existe) then (non)
-    :Renvoie\nmessage d'erreur;
-    end
-  else (oui)
 
+  |Base de données|
+  if (Utilisateur\nexiste ?) then (oui)
     |Base de données|
     :Renvoie\ninformations\nutilisateur;
 
@@ -28,6 +25,11 @@ start
       stop
     else (non)
       :Renvoie\nmessage d'erreur;
-      end    
+      end
+    endif
+  else (non)
+    |Base de données|
+    :Renvoie\nmessage d'erreur;
+    end
   endif
 @enduml
