@@ -1,0 +1,63 @@
+@startuml
+'Deployment view of our architecture
+
+header
+Note : chaque élément représenté ici est un service basé
+dans un container distribué sur plusieurs machines
+endheader
+
+
+() "Protobuf" as protobuf_interface
+() "HTTPS" as https_interface
+
+frame Daemons {
+  [Monitoring]
+  queue "Queue d'attente" as daemon_queue
+
+  [Monitoring] --> daemon_queue
+}
+
+frame Frontends {
+  [Mobile]
+  [Web]
+}
+
+frame "Instances AWS - CoreOS" {
+  queue RabbitMQ
+
+  () "AMQP" as amqp_interface
+
+
+
+  collections "Serveurs\nd'authentification" as auth_cluster
+  collections "Services\nd'analyse" as analysis_cluster
+  collections "Acteurs Daemon" as endpoint_socket_cluster
+  collections "APIs frontends" as frontend_api_cluster
+
+
+  database Cassandra [
+    <b><font size=17>BDD Cassandra
+    ----
+    Analyse
+    ----
+    Evénements
+    ----
+    Authentification
+  ]
+}
+
+'Daemon
+daemon_queue ~right~ protobuf_interface
+protobuf_interface ~~> endpoint_socket_cluster
+
+frontend_api_cluster <~~ https_interface
+https_interface ~ [Web]
+https_interface ~ [Mobile]
+
+amqp_interface .right. RabbitMQ : Nécessite\ninscription à\ndes sujets
+amqp_interface .. Cassandra
+amqp_interface .. endpoint_socket_cluster
+amqp_interface .left. analysis_cluster
+amqp_interface .up. auth_cluster
+amqp_interface .up. frontend_api_cluster
+@enduml
