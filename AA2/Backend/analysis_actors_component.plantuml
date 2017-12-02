@@ -1,0 +1,27 @@
+@startuml
+'Shows the organization of the analytics service, showcasing the interactions and hierarchy of the different actors.
+
+
+node "RabbitMQ queue" {
+  () "AMQP" as AMQP_interface
+}
+
+
+AMQP_interface <---> [Actor 1]
+AMQP_interface <---> [Actor 2] 
+AMQP_interface <---> [Actor ...]
+AMQP_interface <---> [Actor N]
+
+
+note bottom of [Actor 1]
+  Démarre à chaque fois
+  que de nouveaux événements
+  sont persistés en BDD
+end note
+
+note bottom of [Actor N]
+  Démarre dès qu'un autre
+  acteur a généré de
+  nouvelles informations
+end note
+@enduml
