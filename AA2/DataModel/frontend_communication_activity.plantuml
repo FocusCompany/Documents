@@ -1,0 +1,26 @@
+@startuml
+database "Activity Database" {
+  frame "Activity_By_User" {
+    [User 1]
+  }
+  frame "Activity_By_Device" {
+    [Device 1]
+  }
+}
+
+node "Backend" {
+  () "Serialisation JSON" as JSON_interface
+  JSON_interface <-- [REST API]
+}
+
+node "Utilistateurs" {
+  [Navigateur internet] -> [REST API]
+  [Telephone Mobile] -> [REST API]
+  [Navigateur internet] <- JSON_interface
+  [Telephone Mobile] <- JSON_interface
+
+}
+
+[REST API] <-- [User 1]
+[REST API] <-- [Device 1]
+@enduml
