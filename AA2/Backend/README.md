@@ -22,3 +22,7 @@
 ---
 ## JWT creation process - Activity diagram
 ![placeholder](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/FocusCompany/Documents/master/AA2/Backend/jwt_creation.plantuml)
+
+---
+## Analytics actors interactions - Component diagram
+![placeholder](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/FocusCompany/Documents/master/AA2/Backend/analysis_actors_component.plantuml)
