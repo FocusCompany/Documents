@@ -26,3 +26,7 @@
 ---
 ## Analytics actors interactions - Component diagram
 ![placeholder](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/FocusCompany/Documents/master/AA2/Backend/analysis_actors_component.plantuml)
+
+---
+## Wake up of stat modules - Activity diagram
+![placeholder](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/FocusCompany/Documents/master/AA2/Backend/stats_modules_wakeup.plantuml)
