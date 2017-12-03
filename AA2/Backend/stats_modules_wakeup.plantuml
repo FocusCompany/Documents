@@ -1,20 +1,20 @@
 @startuml
 start
-:Un nouvel évènement <math>e</math> de type <math>T</math> provenant du Daemon <math>d</math> est brodcastée dans le cluster;
-:Node <math>N</math> reçoit le payload;
-if (<math>T</math> est connu) then (yes)
+:Un nouvel évènement <math>e</math> de type <math>T</math> provenant du Daemon <math>d</math> est brodcasté dans le cluster;
+:Un node reçoit l'événement;
+if (<math>T</math> est connu) then (oui)
   :Récupère la liste <math>l</math> de tous les modules d'analyse écoutants <math>T_d</math>;
 while (<math>l</math> n'est pas vide)
   fork
-    partition "Réveil parallel de module" {
+    partition "Réveil parallèle du module" {
     if (<math>l_i</math> est dormant) then (oui)
-      :<math>l_i</math> est récuperer depuis le module de persistance;
+      :<math>l_i</math> est récuperé depuis le module de persistance;
     endif
-    :<math>l_i</math> compute sa statistique;
+    :<math>l_i</math> calcule sa statistique;
     }
   end fork
 endwhile
-else (drop)
+else (non, jette <math>e</math>)
   :<math>e</math> est loggé en base;
 endif
 stop
